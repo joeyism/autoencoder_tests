@@ -42,5 +42,11 @@ autoencoder.fit(x_train, x_train,
                 shuffle=True,
                 validation_data=(x_test, x_test),
                 callbacks=[TensorBoard(log_dir='/tmp/autoencoder')])
+canvas_orig = x_test[:1]
+canvas_recon = autoencoder.predict(canvas_orig)
+
+from PIL import Image
 import ipdb
 ipdb.set_trace()
+Image.fromarray((255*canvas_orig.reshape((28, 28))).astype(np.uint8)).save("original.jpeg", "JPEG")
+Image.fromarray((255*canvas_recon.reshape((28, 28))).astype(np.uint8)).save("recon.jpeg", "JPEG")
